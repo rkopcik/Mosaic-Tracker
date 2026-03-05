@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+<meta charset="UTF-8">
+<title>Mosaic Crochet Tracker</title>
+
+<style>
+
+body{
+font-family:Arial, sans-serif;
+margin:20px;
+max-width:100%;
+overflow-x:hidden;
+}
+
+textarea{
+width:100%;
+height:120px;
+font-size:16px;
+}
+
+.steps{
+display:flex;
+flex-wrap:wrap;
+gap:10px;
+}
+
+.step{
+border:1px solid black;
+padding:12px 16px;
+cursor:pointer;
+font-weight:bold;
+font-size:18px;
+background:white;
+}
+
+.done{
+opacity:.35;
+}
+
+.current{
+background:#fff3a0;
+}
+
+.row-small{
+opacity:.4;
+font-size:14px;
+margin-top:10px;
+}
+
+.row{
+margin-top:20px;
+}
+
+button{
+padding:10px 14px;
+font-size:16px;
+margin-top:10px;
+margin-right:10px;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<h2>Mosaic Crochet Tracker</h2>
+<label style="font-size:22px; font-weight:bold;">Project:</label><br>
+<input id="projectName" type="text" placeholder="Project name" oninput="saveProgress()" style="font-size:20px; padding:6px;"><br><br>
+
+<label>Row Start:</label>
+<input id="rowStart" type="number" value="1" style="width:70px;" oninput="saveProgress()">
+<br><br>
+
+<label>Color 1 (Light):</label>
+<input id="color1" type="text" placeholder="Light yarn name" oninput="saveProgress()">
+
+<label style="margin-left:20px;">Color 2 (Dark):</label>
+<input id="color2" type="text" placeholder="Dark yarn name" oninput="saveProgress()">
+
+<label style="margin-left:20px;">Start Row:</label>
+<select id="startColor" onchange="saveProgress()">
+<option value="light">Light</option>
+<option value="dark">Dark</option>
+</select>
+
+<br><br>
+
+<textarea id="patternInput" placeholder="Paste pattern here"></textarea>
+<br><br>
+
+<button id="loadButton" onclick="parsePattern()">Load Pattern</button>
+<button onclick="resetRow(currentRow)">Reset Row</button>
+<button onclick="clearProject()">New Project</button>
+
+<div id="tracker"></div>
+
+<script>
+
+let rows = []
+let currentRow = 0
+
+function saveProgress(){
+
+localStorage.setItem("mosaic_rows", JSON.stringify(rows))
+localStorage.setItem("mosaic_currentRow", currentRow)
+localStorage.setItem("mosaic_projectName", document.getElementById("projectName").value)
+localStorage.setItem("mosaic_rowStart", document.getElementById("rowStart").value)
+localStorage.setItem("mosaic_color1", document.getElementById("color1").value)
+localStorage.setItem("mosaic_color2", document.getElementById("color2").value)
+localStorage.setItem("mosaic_startColor", document.getElementById("startColor").value)
+
+}
+
+function loadProgress(){
+
+const savedRows = localStorage.getItem("mosaic_rows")
+const savedRow = localStorage.getItem("mosaic_currentRow")
+
+if(savedRows){
+rows = JSON.parse(savedRows)
+currentRow = parseInt(savedRow) || 0
+document.getElementById("loadButton").disabled = true
+document.getElementById("projectName").value = localStorage.getItem("mosaic_projectName") || ""
+document.getElementById("color1").value = localStorage.getItem("mosaic_color1") || ""
+document.getElementById("color2").value = localStorage.getItem("mosaic_color2") || ""
+document.getElementById("startColor").value =
+localStorage.getItem("mosaic_startColor") || " light"
+document.getElementById("rowStart").value =
+localStorage.getItem("mosaic_rowStart") || 1 
+
+render()
+
+
+}
+}
+function parsePattern(){
+
+const text = document.getElementById("patternInput").value
+
+rows = []
+let current = []
+
+const lines = text.split("\n")
+
+lines.forEach(line => {
+
+line = line.trim()
+
+if(line === "") return
+
+// detect new row label
+if(/^row\s*\d+/i.test(line) || /^\d+\s/.test(line)){
+
+if(current.length > 0){
+rows.push(current)
+current = []
+}
+
+// remove row label
+line = line.replace(/^row\s*\d+[:.]?\s*/i,"")
+line = line.replace(/^\d+[:.]?\s*/,"")
+
+}
+
+// split stitches
+line.split(",").forEach(part => {
+
+const stitch = part.trim()
+
+if(stitch !== ""){
+current.push({
+text: stitch,
+done: false
+})
+}
+
+})
+
+})
+
+if(current.length > 0){
+rows.push(current)
+}
+
+currentRow = 0
+saveProgress()
+render()
+
+document.getElementById("loadButton").disabled = true
+
+}
+
+function toggle(rowIndex, stepIndex){
+
+// block future rows
+if(rowIndex > currentRow) return
+
+// enforce order only for current row
+if(rowIndex === currentRow){
+
+const next = rows[rowIndex].findIndex(s => !s.done)
+
+if(stepIndex > next) return
+
+}
+
+// toggle stitch
+rows[rowIndex][stepIndex].done = !rows[rowIndex][stepIndex].done
+
+// auto advance row
+if(rowIndex === currentRow){
+
+const finished = rows[rowIndex].every(s => s.done)
+
+if(finished && currentRow < rows.length - 1){
+currentRow++
+}
+
+}
+
+saveProgress()
+
+render()
+
+}
+
+function resetRow(rowIndex){
+
+rows[rowIndex].forEach(s => s.done = false)
+
+currentRow = rowIndex
+
+saveProgress()
+
+render()
+
+}
+
+function clearProject(){
+
+localStorage.removeItem("mosaic_rows")
+localStorage.removeItem("mosaic_currentRow")
+localStorage.removeItem("mosaic_projectName")
+localStorage.removeItem("mosaic_rowStart")
+
+rows = []
+currentRow = 0
+
+document.getElementById("patternInput").value = ""
+document.getElementById("projectName").value = ""
+
+document.getElementById("loadButton").disabled = false
+
+render()
+
+}
+
+function buildRow(rowIndex, small=false){
+
+if(rowIndex < 0 || rowIndex >= rows.length) return null
+
+const container = document.createElement("div")
+container.className = small ? "row-small" : "row"
+
+const steps = document.createElement("div")
+steps.className = "steps"
+
+rows[rowIndex].forEach((seg,i)=>{
+
+const step = document.createElement("div")
+
+step.className = "step"
+
+if(seg.done) step.classList.add("done")
+
+if(!small && !seg.done &&
+i === rows[rowIndex].findIndex(s=>!s.done)){
+step.classList.add("current")
+}
+
+step.innerText = seg.text
+
+step.onclick = () => toggle(rowIndex,i)
+
+steps.appendChild(step)
+
+})
+
+container.appendChild(steps)
+
+return container
+
+}
+
+function render(){
+
+const tracker = document.getElementById("tracker")
+
+tracker.innerHTML = ""
+
+if(rows.length === 0) return
+
+const prev = buildRow(currentRow-1,true)
+if(prev) tracker.appendChild(prev)
+
+const colorLine = document.createElement("div")
+
+const color1 = document.getElementById("color1").value || "Color 1"
+const color2 = document.getElementById("color2").value || "Color 2"
+
+const workingColor = (currentRow % 2 === 0) ? color1 : color2
+
+colorLine.style.fontSize = "18px"
+colorLine.style.fontWeight = "bold"
+colorLine.style.marginTop = "10px"
+
+colorLine.innerText = `Working Color: ${workingColor}`
+
+tracker.appendChild(colorLine)
+
+const title = document.createElement("h3")
+const rowStart = parseInt(document.getElementById("rowStart").value) || 1
+const actualRow = rowStart + currentRow
+
+title.innerText = `Row ${actualRow}`
+title.style.fontSize = "28px"
+title.style.fontWeight = "bold" 
+tracker.appendChild(title)
+
+const current = buildRow(currentRow,false)
+
+const start = document.getElementById("startColor").value
+const isLightRow = (currentRow % 2 === 0)
+
+const tint =
+(start === "light")
+  ? (isLightRow ? "#ffffff" : "#dcecff")
+  : (isLightRow ? "#dcecff" : "#ffffff")
+
+current.style.backgroundColor = tint
+current.style.padding = "10px"
+current.style.borderRadius = "6px"
+
+tracker.appendChild(current)
+
+const next = buildRow(currentRow+1,true)
+if(next) tracker.appendChild(next)
+
+}
+
+document.addEventListener("DOMContentLoaded", loadProgress)
+
+</script>
+
+</body>
+
+</html>
+
+
+
+
