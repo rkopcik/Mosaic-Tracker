@@ -349,14 +349,16 @@ current.style.borderRadius = "6px"
 tracker.appendChild(current)
 
 setTimeout(() => {
-  const activeRow = document.getElementById("currentRowTitle")
 
-  if(activeRow){
-    activeRow.scrollIntoView({
+  const activeStitch = document.querySelector(".step.current")
+
+  if(activeStitch){
+    activeStitch.scrollIntoView({
       behavior: "smooth",
       block: "center"
     })
   }
+
 }, 50)
 }
 document.addEventListener("DOMContentLoaded", loadProgress)
