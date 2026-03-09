@@ -348,16 +348,16 @@ current.style.borderRadius = "6px"
 
 tracker.appendChild(current)
 
-const next = buildRow(currentRow+1,true)
-if(next) tracker.appendChild(next)
-const activeRow = document.getElementById("currentRowTitle")
+setTimeout(() => {
+  const activeRow = document.getElementById("currentRowTitle")
 
-if(activeRow){
-  activeRow.scrollIntoView({
-    behavior: "smooth",
-    block: "center"
-  })
-}}
+  if(activeRow){
+    activeRow.scrollIntoView({
+      behavior: "smooth",
+      block: "center"
+    })
+  }
+}, 50)
 
 document.addEventListener("DOMContentLoaded", loadProgress)
 
