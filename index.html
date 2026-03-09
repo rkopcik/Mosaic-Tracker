@@ -329,6 +329,7 @@ const actualRow = rowStart + currentRow
 title.innerText = `Row ${actualRow}`
 title.style.fontSize = "28px"
 title.style.fontWeight = "bold" 
+title.id = "currentRowTitle"
 tracker.appendChild(title)
 
 const current = buildRow(currentRow,false)
@@ -349,8 +350,14 @@ tracker.appendChild(current)
 
 const next = buildRow(currentRow+1,true)
 if(next) tracker.appendChild(next)
+const current = document.getElementById("currentRowTitle")
 
-}
+if(current){
+  current.scrollIntoView({
+    behavior: "smooth",
+    block: "center"
+  })
+}}
 
 document.addEventListener("DOMContentLoaded", loadProgress)
 
