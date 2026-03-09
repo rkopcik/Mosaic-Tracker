@@ -352,8 +352,8 @@ const next = buildRow(currentRow+1,true)
 if(next) tracker.appendChild(next)
 const current = document.getElementById("currentRowTitle")
 
-if(current){
-  current.scrollIntoView({
+if(activeRow){
+  activeRow.scrollIntoView({
     behavior: "smooth",
     block: "center"
   })
