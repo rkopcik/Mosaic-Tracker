@@ -331,7 +331,6 @@ if(rows.length === 0) return
 const prev = buildRow(currentRow-1,true)
 if(prev) tracker.appendChild(prev)
 
-const colorLine = document.createElement("div")
 
 const color1 = document.getElementById("color1").value || "Color 1"
 const color2 = document.getElementById("color2").value || "Color 2"
@@ -340,19 +339,16 @@ const workingColor = (currentRow % 2 === 0) ? color1 : color2
 
 document.getElementById("dashColor").innerText =
 "Working Color: " + workingColor
-  
-colorLine.style.fontSize = "18px"
-colorLine.style.fontWeight = "bold"
-colorLine.style.marginTop = "10px"
-
-colorLine.innerText = `Working Color: ${workingColor}`
-
-tracker.appendChild(colorLine)
 
 const title = document.createElement("h3")
 const rowStart = parseInt(document.getElementById("rowStart").value) || 1
 const actualRow = rowStart + currentRow
 
+const totalRows = rows.length + rowStart - 1
+
+document.getElementById("dashRow").innerText =
+"Row: " + actualRow + " of " + totalRows
+  
 title.innerText = `Row ${actualRow}`
 title.style.fontSize = "28px"
 title.style.fontWeight = "bold" 
@@ -360,6 +356,17 @@ title.id = "currentRowTitle"
 tracker.appendChild(title)
 
 const current = buildRow(currentRow,false)
+
+const totalStitches = rows[currentRow].length
+const completedStitches = rows[currentRow].filter(s => s.done).length
+
+document.getElementById("dashStitches").innerText =
+"Stitches: " + completedStitches + " / " + totalStitches
+
+const progress = Math.round((completedStitches / totalStitches) * 100)
+  
+document.getElementById("dashProgress").innerText =
+"Row Progress: " + progress + "%"  
 
 const start = document.getElementById("startColor").value
 const isLightRow = (currentRow % 2 === 0)
