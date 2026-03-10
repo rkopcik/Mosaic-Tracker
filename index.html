@@ -61,15 +61,6 @@ margin-top:10px;
 margin-right:10px;
 }
 
-#dashboard{
-position:sticky;
-top:0;
-background:white;
-padding:10px;
-border-bottom:1px solid #ccc;
-z-index:1000;
-font-size:18px;
-}
 #dashProject{
 font-size:22px;
 font-weight:bold;
@@ -240,7 +231,7 @@ function saveProgress(){
 
 localStorage.setItem("mosaic_rows", JSON.stringify(rows))
 localStorage.setItem("mosaic_currentRow", currentRow)
-localStorage.setItem("mosaic_projectName", document.getElementById("projectName").value)
+localStorage.setItem("mosaic_projectName", document.getElementById("dashProject").value)
 localStorage.setItem("mosaic_rowStart", document.getElementById("rowStart").value)
 localStorage.setItem("mosaic_color1", document.getElementById("color1").value)
 localStorage.setItem("mosaic_color2", document.getElementById("color2").value)
@@ -480,7 +471,7 @@ tracker.innerHTML = ""
 
 if(rows.length === 0) return
 document.getElementById("dashProject").innerText =
-document.getElementById("projectName").value || "Crochet Project"
+document.getElementById("mosaic-projectName").value || "Crochet Project"
 const prev = buildRow(currentRow-1,true)
 if(prev) tracker.appendChild(prev)
 
@@ -528,10 +519,7 @@ completedStitches += countStitches([step])
 const progress = Math.round((completedStitches / totalStitches) * 100)
 
 document.getElementById("dashStitches").innerText =
-"Stitches: " + completedStitches + " / " + totalStitches + " (" + progress + "%)"
-  
-document.getElementById("dashProgress").innerText =
-"Row Progress: " + progress + "%"  
+"Stitches: " + completedStitches + " / " + totalStitches + " (" + progress + "%)"  
 
 const start = document.getElementById("startColor").value
 const isLightRow = (currentRow % 2 === 0)
