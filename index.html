@@ -143,14 +143,17 @@ font-size:16px;
 #dashZoom{
 display:flex;
 align-items:center;
-gap:8px;
+gap:10px;
 margin-top:8px;
 font-size:16px;
+line-height:1;
 }
 
 #dashZoom button{
-padding:4px 10px;
-font-size:14px;
+display:flex;
+align-items:center;
+justify-content:center;
+height:26px;
 }
 
 </style>
@@ -174,19 +177,24 @@ font-size:14px;
   </div>
 
   <div id="dashLine2">
-    <div id="dashGoal"></div>
-    <div id="dashTodayTime"></div>
-  </div>
+  <div id="dashGoal">Goal 0 / 0</div>
+  <div id="dashTodayTime">0m today</div>
+</div>
 
   <div id="dashLine3">
-    <div id="dashRow"></div>
-    <div id="dashTotalTime"></div>
-  </div>
-
+  <div id="dashRow"></div>
+  <div id="dashProjectStats">0% | 0h 0m</div>
+</div>
+         
   <div id="dashControls">
-    <button onclick="resetRow(currentRow)">Reset Current</button>
-    <button onclick="resetPreviousRow()">Reset Previous</button>
-  </div>
+
+  <div id="dashResetLabel">Reset Row</div>
+
+  <button onclick="resetRow(currentRow)">Current</button>
+
+  <button onclick="resetPreviousRow()">Previous</button>
+
+</div>
 
   <div id="dashZoom">
     Zoom
