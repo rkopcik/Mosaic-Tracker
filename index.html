@@ -84,6 +84,8 @@ font-size:18px;
 
   <div id="dashColor"></div>
 
+  <div id="dashProject"></div>
+
   <div id="dashRow"></div>
 
   <div id="dashStitches"></div>
@@ -404,7 +406,7 @@ tracker.appendChild(title)
 
 const current = buildRow(currentRow,false)
 
-const totalStitches = countStitches(row[currentRow])
+const totalStitches = countStitches(rows[currentRow])
 let completedStitches = 0
 
 rows[currentRow].forEach(step => {
