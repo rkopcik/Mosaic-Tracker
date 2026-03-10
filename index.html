@@ -89,12 +89,19 @@ display:none;
 /* DASHBOARD */
 
 #dashboard{
-position:sticky;
-top:0;
+position: sticky;
+top: 0;
+z-index: 1000;
+
+display:grid;
+grid-template-columns: 1fr 1fr;
+gap:8px 40px;
+align-items:center;
+
+font-size:18px;
+padding:10px 0;
 background:white;
-padding:10px 10px 14px 10px;
-border-bottom:2px solid #ddd;
-z-index:1000;
+border-bottom:1px solid #ccc;
 }
 
 /* header */
@@ -129,8 +136,9 @@ margin-top:4px;
 
 #dashControls{
 display:flex;
+align-items:center;
 gap:10px;
-margin-top:10px;
+margin-top:6px;
 }
 
 #dashControls button{
@@ -499,9 +507,11 @@ const actualRow = rowStart + currentRow
 
 const totalRows = rows.length + rowStart - 1
 
+const rowPercent = Math.round((currentRow / rows.length) * 100)
+
 document.getElementById("dashRow").innerText =
-"Row: " + actualRow + " of " + totalRows
-  
+"Row: " + actualRow + " of " + totalRows + " (" + rowPercent + "%)"
+  
 title.innerText = `Row ${actualRow}`
 title.style.fontSize = "28px"
 title.style.fontWeight = "bold" 
@@ -523,10 +533,10 @@ completedStitches += countStitches([step])
 
 })
 
-document.getElementById("dashStitches").innerText =
-"Stitches: " + completedStitches + " / " + totalStitches
-
 const progress = Math.round((completedStitches / totalStitches) * 100)
+
+document.getElementById("dashStitches").innerText =
+"Stitches: " + completedStitches + " / " + totalStitches + " (" + progress + "%)"
   
 document.getElementById("dashProgress").innerText =
 "Row Progress: " + progress + "%"  
