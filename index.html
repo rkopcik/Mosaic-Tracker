@@ -348,6 +348,9 @@ current.style.borderRadius = "6px"
 
 tracker.appendChild(current)
 
+const next = buildRow(currentRow+1,true)
+if(next) tracker.appendChild(next)
+
 setTimeout(() => {
 
   const activeStitch = document.querySelector(".step.current")
