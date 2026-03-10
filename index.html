@@ -97,35 +97,6 @@ margin-bottom:6px;
 
 </div>
   
-<label style="font-size:22px; font-weight:bold;">Project:</label><br>
-<input id="projectName" type="text" placeholder="Project name" oninput="saveProgress()" style="font-size:20px; padding:6px;"><br><br>
-
-<label>Row Start:</label>
-<input id="rowStart" type="number" value="1" style="width:70px;" oninput="saveProgress()">
-<br><br>
-
-<label>Color 1 (Light):</label>
-<input id="color1" type="text" placeholder="Light yarn name" oninput="saveProgress()">
-
-<label style="margin-left:20px;">Color 2 (Dark):</label>
-<input id="color2" type="text" placeholder="Dark yarn name" oninput="saveProgress()">
-
-<label style="margin-left:20px;">Start Row:</label>
-<select id="startColor" onchange="saveProgress()">
-<option value="light">Light</option>
-<option value="dark">Dark</option>
-</select>
-
-<br><br>
-
-<textarea id="patternInput" placeholder="Paste pattern here"></textarea>
-<br><br>
-
-<button id="loadButton" onclick="parsePattern()">Load Pattern</button>
-<button onclick="resetRow(currentRow)">Reset Row</button>
-<button onclick="clearProject()">New Project</button>
-
-<div id="tracker"></div>
 
 <script>
 
