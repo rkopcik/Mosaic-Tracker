@@ -89,21 +89,38 @@ display:none;
 /* DASHBOARD */
 
 #dashboard{
-position: sticky;
-top: 0;
-z-index: 1000;
+position:sticky;
+top:0;
+z-index:1000;
 
 display:grid;
 grid-template-columns: 1fr 1fr;
-gap:8px 40px;
-align-items:center;
+grid-template-rows:auto auto auto auto;
 
+column-gap:40px;
+row-gap:6px;
+
+align-items:center;
 font-size:18px;
+
 padding:10px 0;
 background:white;
 border-bottom:1px solid #ccc;
 }
+#dashProject { grid-column:1; grid-row:1; font-size:26px; font-weight:bold; }
 
+#dashColor { grid-column:2; grid-row:1; }
+
+#dashGoal { grid-column:1; grid-row:2; }
+
+#dashToday { grid-column:2; grid-row:2; }
+
+#dashRow { grid-column:1; grid-row:3; }
+
+#dashProgress { grid-column:2; grid-row:3; }
+
+#dashControls { grid-column:1 / span 2; grid-row:4; display:flex; gap:10px; align-items:center; }
+         
 /* header */
 
 #dashHeader{
