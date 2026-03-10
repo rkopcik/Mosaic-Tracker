@@ -455,7 +455,18 @@ setTimeout(() => {
 
 }, 50)
 }
-document.addEventListener("DOMContentLoaded", loadProgress)
+document.addEventListener("DOMContentLoaded", () => {
+
+loadProgress()
+
+const savedPattern = localStorage.getItem("mosaic_patternText")
+
+if(savedPattern && savedPattern.trim() !== ""){
+document.getElementById("patternInput").value = savedPattern
+parsePattern()
+}
+
+})
 
 </script>
 
