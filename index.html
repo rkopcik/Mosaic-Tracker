@@ -258,7 +258,8 @@ rows = JSON.parse(savedRows)
 currentRow = parseInt(savedRow) || 0
 const loadBtn = document.getElementById("loadButton")
 if(loadBtn) loadBtn.disabled = true
-document.getElementById("projectName").value = localStorage.getItem("mosaic_projectName") || ""
+document.getElementById("dashProject").innerText =
+"Project: " + (localStorage.getItem("mosaic_projectName") || "")
 document.getElementById("color1").value = localStorage.getItem("mosaic_color1") || ""
 document.getElementById("color2").value = localStorage.getItem("mosaic_color2") || ""
 document.getElementById("startColor").value =
