@@ -95,15 +95,37 @@ display:none;
 
 <div id="dashboard">
 
-  <div id="dashProject"></div>
-  
-  <div id="dashColor"></div>
+  <div id="dashHeader">
+    <div id="dashProject"></div>
+    <div id="menuButton">☰</div>
+  </div>
 
-  <div id="dashRow"></div>
+  <div id="dashLine1">
+    <div id="dashColor"></div>
+    <div id="dashStitches"></div>
+  </div>
 
-  <div id="dashStitches"></div>
+  <div id="dashLine2">
+    <div id="dashGoal"></div>
+    <div id="dashTodayTime"></div>
+  </div>
 
-  <div id="dashProgress"></div>
+  <div id="dashLine3">
+    <div id="dashRow"></div>
+    <div id="dashTotalTime"></div>
+  </div>
+
+  <div id="dashControls">
+    <button onclick="resetRow(currentRow)">Reset Current</button>
+    <button onclick="resetPreviousRow()">Reset Previous</button>
+  </div>
+
+  <div id="dashZoom">
+    Zoom
+    <button onclick="setZoom(1)">1x</button>
+    <button onclick="setZoom(1.5)">1.5x</button>
+    <button onclick="setZoom(2)">2x</button>
+  </div>
 
 </div>
 <div id="controls">
