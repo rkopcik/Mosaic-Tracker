@@ -329,22 +329,23 @@ let groupTotal = 0
 let inGroup = false
 
 row.forEach(step => {
-console.log(step)
-let text = step.text.toLowerCase()
 
-// detect group start
-if(text.includes("(")){
-inGroup = true
+let raw = step.text.toLowerCase()   // original text
+let text = raw                      // working copy
+
+// detect start of group
+if(raw.includes("(")){
+  inGroup = true
 }
 
 // detect multiplier
 let multiplier = 1
-let multMatch = text.match(/x(\d+)/)
+let multMatch = raw.match(/x(\d+)/)
 if(multMatch){
-multiplier = parseInt(multMatch[1])
+  multiplier = parseInt(multMatch[1])
 }
 
-// remove parentheses and multipliers
+// remove parentheses and multiplier for counting
 text = text.replace(/[()]/g,"")
 text = text.replace(/x\d+/,"")
 
@@ -353,16 +354,16 @@ let numMatch = text.match(/\d+/)
 let stitches = numMatch ? parseInt(numMatch[0]) : 1
 
 if(inGroup){
-groupTotal += stitches
+  groupTotal += stitches
 }else{
-total += stitches
+  total += stitches
 }
 
-// detect group end
-if(step.text.includes(")")){
-total += groupTotal * multiplier
-groupTotal = 0
-inGroup = false
+// detect group end using ORIGINAL text
+if(raw.includes(")")){
+  total += groupTotal * multiplier
+  groupTotal = 0
+  inGroup = false
 }
 
 })
