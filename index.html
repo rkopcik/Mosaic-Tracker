@@ -104,8 +104,33 @@ display:none;
   <div id="dashProgress"></div>
 
 </div>
-  
+<div id="controls">
+
+<label>Project:</label>
+<input id="projectName" type="text">
+
+<input id="color1" type="text">
+<input id="color2" type="text">
+
+<select id="startColor">
+<option value="light">Light</option>
+<option value="dark">Dark</option>
+</select>
+
+<input id="rowStart" type="number">
+
+<textarea id="patternInput"></textarea>
+
+<button id="loadButton" onclick="parsePattern()">Load Pattern</button>
+
+<button onclick="resetRow(currentRow)">Reset Row</button>
+
+<button onclick="clearProject()">New Project</button>
+
+</div>
 <div id="tracker"></div>
+
+  
   
 <script>
 
