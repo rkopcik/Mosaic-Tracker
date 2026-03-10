@@ -475,8 +475,10 @@ const tracker = document.getElementById("tracker")
 tracker.innerHTML = ""
 
 if(rows.length === 0) return
+
 document.getElementById("dashProject").innerText =
-document.getElementById("mosaic_projectName").value || "Crochet Project"
+localStorage.getItem("mosaic_projectName") || "Crochet Project"
+
 const prev = buildRow(currentRow-1,true)
 if(prev) tracker.appendChild(prev)
 
