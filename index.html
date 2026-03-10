@@ -320,6 +320,53 @@ return container
 
 }
 
+function countStitches(row){
+
+let total = 0
+let groupTotal = 0
+let inGroup = false
+
+row.forEach(step => {
+
+let text = step.text.toLowerCase()
+
+// detect group start
+if(text.includes("(")){
+inGroup = true
+text = text.replace("(","")
+}
+
+// detect multiplier
+let multiplier = 1
+let multMatch = text.match(/x(\d+)/)
+
+if(multMatch){
+multiplier = parseInt(multMatch[1])
+text = text.replace(/x\d+/,"")
+}
+
+// extract stitch number
+let numMatch = text.match(/\d+/)
+let stitches = numMatch ? parseInt(numMatch[0]) : 1
+
+if(inGroup){
+groupTotal += stitches
+}else{
+total += stitches
+}
+
+// detect group end
+if(text.includes(")")){
+total += groupTotal * multiplier
+groupTotal = 0
+inGroup = false
+}
+
+})
+
+return total
+}
+  
 function render(){
 
 const tracker = document.getElementById("tracker")
@@ -357,8 +404,18 @@ tracker.appendChild(title)
 
 const current = buildRow(currentRow,false)
 
-const totalStitches = rows[currentRow].length
-const completedStitches = rows[currentRow].filter(s => s.done).length
+const totalStitches = countStitches(row[currentRow])
+let completedStitches = 0
+
+rows[currentRow].forEach(step => {
+
+if(step.done){
+
+completedStitches += countStitches([step])
+
+}
+
+})
 
 document.getElementById("dashStitches").innerText =
 "Stitches: " + completedStitches + " / " + totalStitches
