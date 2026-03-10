@@ -335,17 +335,18 @@ let text = step.text.toLowerCase()
 // detect group start
 if(text.includes("(")){
 inGroup = true
-text = text.replace("(","")
 }
 
 // detect multiplier
 let multiplier = 1
 let multMatch = text.match(/x(\d+)/)
-
 if(multMatch){
 multiplier = parseInt(multMatch[1])
-text = text.replace(/x\d+/,"")
 }
+
+// remove parentheses and multipliers
+text = text.replace(/[()]/g,"")
+text = text.replace(/x\d+/,"")
 
 // extract stitch number
 let numMatch = text.match(/\d+/)
@@ -358,7 +359,7 @@ total += stitches
 }
 
 // detect group end
-if(text.includes(")")){
+if(step.text.includes(")")){
 total += groupTotal * multiplier
 groupTotal = 0
 inGroup = false
