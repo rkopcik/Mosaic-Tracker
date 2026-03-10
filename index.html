@@ -336,32 +336,26 @@ row.forEach(step => {
 
 let raw = step.text.toLowerCase()
 
-// detect repeat multiplier like x2
-let multMatch = raw.match(/x(\d+)/)
-if(multMatch){
-groupMultiplier = parseInt(multMatch[1])
-}
-
-// detect stitch number
 let numMatch = raw.match(/\d+/)
 let stitches = numMatch ? parseInt(numMatch[0]) : 1
 
-// detect group start
 if(raw.includes("(")){
 inGroup = true
 groupTotal = 0
 }
 
-// accumulate stitches
 if(inGroup){
 groupTotal += stitches
 }else{
 total += stitches
 }
 
-// detect group end
 if(raw.includes(")")){
+let multMatch = raw.match(/x(\d+)/)
+groupMultiplier = multMatch ? parseInt(multMatch[1]) : 1
+
 total += groupTotal * groupMultiplier
+
 groupTotal = 0
 groupMultiplier = 1
 inGroup = false
