@@ -70,7 +70,11 @@ border-bottom:1px solid #ccc;
 z-index:1000;
 font-size:18px;
 }
-
+#dashProject{
+font-size:22px;
+font-weight:bold;
+margin-bottom:6px;
+}  
 </style>
 
 </style>
@@ -373,7 +377,8 @@ const tracker = document.getElementById("tracker")
 tracker.innerHTML = ""
 
 if(rows.length === 0) return
-
+document.getElementById("dashProject").innerText =
+document.getElementById("projectName").value || "Crochet Project"
 const prev = buildRow(currentRow-1,true)
 if(prev) tracker.appendChild(prev)
 
