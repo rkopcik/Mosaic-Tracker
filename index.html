@@ -251,12 +251,17 @@ const loadBtn = document.getElementById("loadButton")
 if(loadBtn) loadBtn.disabled = true
 document.getElementById("dashProject").innerText =
 "Project: " + (localStorage.getItem("mosaic_projectName") || "")
-document.getElementById("color1").value = localStorage.getItem("mosaic_color1") || ""
-document.getElementById("color2").value = localStorage.getItem("mosaic_color2") || ""
-document.getElementById("startColor").value =
-localStorage.getItem("mosaic_startColor") || " light"
-document.getElementById("rowStart").value =
-localStorage.getItem("mosaic_rowStart") || 1 
+const c1 = document.getElementById("color1")
+if(c1) c1.value = localStorage.getItem("mosaic_color1") || ""
+
+const c2 = document.getElementById("color2")
+if(c2) c2.value = localStorage.getItem("mosaic_color2") || ""
+
+const sc = document.getElementById("startColor")
+if(sc) sc.value = localStorage.getItem("mosaic_startColor") || "light"
+
+const rs = document.getElementById("rowStart")
+if(rs) rs.value = localStorage.getItem("mosaic_rowStart") || 1 
 
 render()
 
