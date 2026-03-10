@@ -132,7 +132,8 @@ const savedRow = localStorage.getItem("mosaic_currentRow")
 if(savedRows){
 rows = JSON.parse(savedRows)
 currentRow = parseInt(savedRow) || 0
-document.getElementById("loadButton").disabled = true
+const loadBtn = document.getElementById("loadButton")
+if(loadBtn) loadBtn.disabled = true
 document.getElementById("projectName").value = localStorage.getItem("mosaic_projectName") || ""
 document.getElementById("color1").value = localStorage.getItem("mosaic_color1") || ""
 document.getElementById("color2").value = localStorage.getItem("mosaic_color2") || ""
