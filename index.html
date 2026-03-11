@@ -84,19 +84,28 @@ position:sticky;
 top:0;
 z-index:1000;
 
-display:grid;
-grid-template-columns: 1fr 1fr;
-grid-template-rows:auto auto auto auto;
-
-column-gap:40px;
-row-gap:6px;
-
-align-items:center;
-font-size:18px;
+display:flex;
+justify-content:space-between;
+align-items:flex-start;
 
 padding:10px 0;
 background:white;
 border-bottom:1px solid #ccc;
+font-size:18px;
+}
+
+#dashLeft{
+display:flex;
+flex-direction:column;
+gap:6px;
+}
+
+#dashRight{
+display:flex;
+flex-direction:column;
+gap:6px;
+align-items:flex-end;
+text-align:right;
 }
 #dashProject { grid-column:1; grid-row:1; font-size:26px; font-weight:bold; }
 
