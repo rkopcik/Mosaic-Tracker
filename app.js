@@ -168,13 +168,39 @@ return container
 function countStitches(row){
 
 let total = 0
+let groupTotal = 0
+let inGroup = false
+let multiplier = 1
 
-row.forEach(step => {
+row.forEach(step=>{
 
 let raw = step.text.toLowerCase()
-let numMatch = raw.match(/\d+/)
 
-total += numMatch ? parseInt(numMatch[0]) : 1
+let numMatch = raw.match(/\d+/)
+let stitches = numMatch ? parseInt(numMatch[0]) : 1
+
+if(raw.includes("(")){
+inGroup = true
+groupTotal = 0
+}
+
+if(inGroup){
+groupTotal += stitches
+}else{
+total += stitches
+}
+
+if(raw.includes(")")){
+let multMatch = raw.match(/x(\d+)/)
+
+multiplier = multMatch ? parseInt(multMatch[1]) : 1
+
+total += groupTotal * multiplier
+
+groupTotal = 0
+multiplier = 1
+inGroup = false
+}
 
 })
 
