@@ -174,8 +174,6 @@ height:26px;
 
 </style>
 
-</style>
-
 </head>
 
 <body>
@@ -381,10 +379,18 @@ localStorage.removeItem("mosaic_rowStart")
 rows = []
 currentRow = 0
 
-document.getElementById("patternInput").value = ""
-document.getElementById("projectName").value = ""
+if(rows.length === 0) return
 
-document.getElementById("loadButton").disabled = false
+function clearProject(){
+
+localStorage.clear()
+
+rows = []
+currentRow = 0
+
+render()
+
+}
 
 render()
 
@@ -483,8 +489,8 @@ const prev = buildRow(currentRow-1,true)
 if(prev) tracker.appendChild(prev)
 
 
-const color1 = document.getElementById("color1").value || "Color 1"
-const color2 = document.getElementById("color2").value || "Color 2"
+const color1 = localStorage.getItem("mosaic_color1").value || "Color 1"
+const color2 = localStorage.getItem("mosaic_color2").value || "Color 2"
 
 const workingColor = (currentRow % 2 === 0) ? color1 : color2
 
@@ -492,7 +498,7 @@ document.getElementById("dashColor").innerText =
 "Working Color: " + workingColor
 
 const title = document.createElement("h3")
-const rowStart = parseInt(document.getElementById("rowStart").value) || 1
+const rowStart = parseInt(localStorage.getItem("mosaic_rowStart").value) || 1
 const actualRow = rowStart + currentRow
 
 const totalRows = rows.length + rowStart - 1
@@ -528,7 +534,7 @@ const progress = Math.round((completedStitches / totalStitches) * 100)
 document.getElementById("dashStitches").innerText =
 "Stitches: " + completedStitches + " / " + totalStitches + " (" + progress + "%)"  
 
-const start = document.getElementById("startColor").value
+const start = localStorage.getItem("mosaic_startColor").value
 const isLightRow = (currentRow % 2 === 0)
 
 const tint =
