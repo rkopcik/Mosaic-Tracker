@@ -362,15 +362,16 @@ document.body.style.zoom = level
 
 document.addEventListener("DOMContentLoaded",()=>{
 
-loadProgress()
-
-if(rows.length===0){
-
-const savedPattern=localStorage.getItem("mosaic_patternText")
+const savedPattern = localStorage.getItem("mosaic_patternText")
 
 if(savedPattern){
+
 parsePattern(savedPattern)
-}
+
+}else{
+
+loadProgress()
 
 }
+
 })
