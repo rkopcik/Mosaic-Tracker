@@ -258,7 +258,12 @@ const dailyGoal = parseInt(localStorage.getItem("mosaic_dailyGoal")) || 0
 
 let goalPercent = 0
 if(dailyGoal > 0){
-goalPercent = Math.round((rowsToday / dailyGoal) * 100)
+let rowPercent = 0
+
+if(rows.length > 0){
+rowPercent = Math.round(((currentRow + 1) / rows.length) * 100)
+}
+goalPercent = Math.min(Math.round((rowsToday / dailyGoal) * 100),100)
 }
 
 document.getElementById("dashGoal").innerText =
@@ -301,9 +306,11 @@ const rowStart = parseInt(localStorage.getItem("mosaic_rowStart")) || 1
 const actualRow = rowStart + currentRow
 const totalRows = rows.length + rowStart - 1
 
-const rowPercent = rows.length > 0
-  ? Math.round(((currentRow + 1) / rows.length) * 100)
-  : 0
+let rowPercent = 0
+
+if(rows.length > 0){
+rowPercent = Math.round(((currentRow + 1) / rows.length) * 100)
+}
 
 document.getElementById("dashRow").innerText =
 "Row: " + actualRow + " of " + totalRows + " (" + rowPercent + "%)"
