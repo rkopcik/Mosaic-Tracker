@@ -12,20 +12,27 @@ zoom:2;
 position:sticky;
 top:0;
 z-index:1000;
+
 display:flex;
 justify-content:space-between;
 align-items:flex-start;
+
 padding:10px 0;
 background:white;
 border-bottom:1px solid #ccc;
+
 font-size:18px;
 }
+
+/* LEFT COLUMN */
 
 #dashLeft{
 display:flex;
 flex-direction:column;
 gap:6px;
 }
+
+/* RIGHT COLUMN */
 
 #dashRight{
 display:flex;
@@ -35,10 +42,21 @@ align-items:flex-end;
 text-align:right;
 }
 
+/* PROJECT TITLE */
+
 #dashProject{
-font-size:26px;
 font-weight:bold;
 }
+
+/* BUTTON ROWS */
+
+#dashResetButtons,
+#dashZoomButtons{
+display:flex;
+gap:8px;
+}
+
+/* BUTTON SIZE */
 
 #dashResetButtons button,
 #dashZoomButtons button{
