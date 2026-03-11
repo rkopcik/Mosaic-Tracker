@@ -1,6 +1,7 @@
 let rows = []
 let currentRow = 0
-
+let rowsToday = parseInt(localStorage.getItem("mosaic_rowsToday")) || 0
+let goalDate = localStorage.getItem("mosaic_goalDate") || ""
 
 function saveProgress(){
 
@@ -108,8 +109,13 @@ if(rowIndex === currentRow){
 
 const finished = rows[rowIndex].every(s => s.done)
 
-if(finished && currentRow < rows.length-1){
+if(finished && currentRow<rows.length-1){
+
 currentRow++
+rowsToday++
+
+localStorage.setItem("mosaic_rowsToday",rowsToday)
+
 }
 
 }
@@ -239,7 +245,6 @@ const projectName = localStorage.getItem("mosaic_projectName") || "Crochet Proje
 document.getElementById("dashProject").innerText =
 "Project: " + projectName
 
-
 const color1 = localStorage.getItem("mosaic_color1") || "Color A"
 const color2 = localStorage.getItem("mosaic_color2") || "Color B"
 
@@ -249,8 +254,15 @@ document.getElementById("dashColor").innerText =
 "Working Color: " + workingColor
 
 
+const dailyGoal = parseInt(localStorage.getItem("mosaic_dailyGoal")) || 0
+
+let goalPercent = 0
+if(dailyGoal > 0){
+goalPercent = Math.round((rowsToday / dailyGoal) * 100)
+}
+
 document.getElementById("dashGoal").innerText =
-"Daily Goal: --"
+"Daily Goal: " + rowsToday + " / " + dailyGoal + " (" + goalPercent + "%)"
 
 document.getElementById("dashGoalTime").innerText =
 "Goal Time: --"
@@ -361,6 +373,14 @@ document.body.style.zoom = level
 
 
 document.addEventListener("DOMContentLoaded",()=>{
+
+const today = new Date().toISOString().split("T")[0]
+
+if(goalDate !== today){
+rowsToday = 0
+localStorage.setItem("mosaic_rowsToday",0)
+localStorage.setItem("mosaic_goalDate",today)
+}
 
 loadProgress()
 
