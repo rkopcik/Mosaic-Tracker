@@ -163,23 +163,14 @@ padding:6px 12px;
 font-size:16px;
 }
 
-/* zoom */
-
-#dashZoom{
-display:flex;
-align-items:center;
-gap:10px;
-margin-top:8px;
-font-size:16px;
-line-height:1;
-}
-
-#dashZoom button{
-display:flex;
-align-items:center;
-justify-content:center;
+#dashResetButtons button,
+#dashZoomButtons button{
 height:26px;
+padding:4px 10px;
+font-size:14px;
+margin:0;
 }
+         
 
 </style>
 
@@ -509,6 +500,9 @@ const workingColor = (currentRow % 2 === 0) ? color1 : color2
 document.getElementById("dashColor").innerText =
 "Working Color: " + workingColor
 
+document.getElementById("dashGoal").innerText =
+"Daily Goal: 0 / 0 (0%)"
+         
 const title = document.createElement("h3")
 const rowStart = parseInt(localStorage.getItem("mosaic_rowStart").value) || 1
 const actualRow = rowStart + currentRow
