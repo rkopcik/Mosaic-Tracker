@@ -33,6 +33,7 @@ rows = []
 currentRow = 0
 
 // clear saved progress
+localStorage.setItem("mosaic_patternText", text)
 localStorage.removeItem("mosaic_rows")
 localStorage.removeItem("mosaic_currentRow")
 
@@ -363,16 +364,12 @@ document.addEventListener("DOMContentLoaded",()=>{
 
 loadProgress()
 
-const savedPattern = localStorage.getItem("mosaic_patternText")
+if(rows.length===0){
 
-if(savedPattern && rows.length === 0){
+const savedPattern=localStorage.getItem("mosaic_patternText")
 
+if(savedPattern){
 parsePattern(savedPattern)
-
-saveProgress()
-
-render()
-
 }
 
 })
