@@ -119,7 +119,7 @@ currentRow++
 }
 
 }
-
+}
 saveProgress()
 render()
 
