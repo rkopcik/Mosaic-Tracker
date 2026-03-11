@@ -1,12 +1,14 @@
 let rows=[]
 let currentRow=0
 
+
 function saveProgress(){
 
 localStorage.setItem("mosaic_rows",JSON.stringify(rows))
 localStorage.setItem("mosaic_currentRow",currentRow)
 
 }
+
 
 function loadProgress(){
 
@@ -22,6 +24,54 @@ render()
 }
 
 }
+
+
+function parsePattern(text){
+
+rows=[]
+let current=[]
+
+const lines=text.split("\n")
+
+lines.forEach(line=>{
+
+line=line.trim()
+
+if(line==="") return
+
+if(/^row\s*\d+/i.test(line) || /^\d+\s/.test(line)){
+
+if(current.length>0){
+rows.push(current)
+current=[]
+}
+
+line=line.replace(/^row\s*\d+[:.]?\s*/i,"")
+line=line.replace(/^\d+[:.]?\s*/,"")
+
+}
+
+line.split(",").forEach(part=>{
+
+const stitch=part.trim()
+
+if(stitch!==""){
+current.push({
+text:stitch,
+done:false
+})
+}
+
+})
+
+})
+
+if(current.length>0){
+rows.push(current)
+}
+
+}
+
 
 function toggle(rowIndex,stepIndex){
 
@@ -51,6 +101,7 @@ render()
 
 }
 
+
 function resetRow(rowIndex){
 
 rows[rowIndex].forEach(s=>s.done=false)
@@ -60,6 +111,7 @@ saveProgress()
 render()
 
 }
+
 
 function resetPreviousRow(){
 
@@ -76,6 +128,7 @@ render()
 }
 
 }
+
 
 function buildRow(rowIndex,small=false){
 
@@ -112,6 +165,7 @@ return container
 
 }
 
+
 function countStitches(row){
 
 let total=0
@@ -129,6 +183,7 @@ return total
 
 }
 
+
 function render(){
 
 const tracker=document.getElementById("tracker")
@@ -136,7 +191,8 @@ tracker.innerHTML=""
 
 if(rows.length===0) return
 
-document.getElementById("dashProject").innerText="Crochet Project"
+const projectName=localStorage.getItem("mosaic_projectName") || "Crochet Project"
+document.getElementById("dashProject").innerText=projectName
 
 const prev=buildRow(currentRow-1,true)
 if(prev) tracker.appendChild(prev)
@@ -187,10 +243,28 @@ block:"center"
 
 }
 
+
 function setZoom(level){
 
 document.body.style.zoom=level
 
 }
 
-document.addEventListener("DOMContentLoaded",loadProgress)
+
+document.addEventListener("DOMContentLoaded",()=>{
+
+loadProgress()
+
+const savedPattern=localStorage.getItem("mosaic_patternText")
+
+if(savedPattern && rows.length===0){
+
+parsePattern(savedPattern)
+
+saveProgress()
+
+render()
+
+}
+
+})
