@@ -32,15 +32,12 @@ function parsePattern(text){
 rows = []
 currentRow = 0
 
-// store new pattern
-localStorage.setItem("mosaic_patternText", text)
-
 // clear saved progress
+localStorage.setItem("mosaic_patternText", text)
 localStorage.removeItem("mosaic_rows")
 localStorage.removeItem("mosaic_currentRow")
 
 let current = []
-let groupBuffer = ""
 
 const lines = text.split("\n")
 
@@ -61,55 +58,6 @@ current = []
 // remove row label
 line = line.replace(/^row\s*\d+[:.]?\s*/i,"")
 line = line.replace(/^\d+[:.]?\s*/,"")
-
-}
-
-// split stitches
-line.split(",").forEach(part => {
-
-let stitch = part.trim()
-
-if(stitch === "") return
-
-// start grouped repeat
-if(stitch.includes("(") && !stitch.includes(")")){
-groupBuffer = stitch
-return
-}
-
-// finish grouped repeat
-if(groupBuffer){
-groupBuffer += " " + stitch
-
-if(stitch.includes(")")){
-current.push({
-text: groupBuffer,
-done: false
-})
-groupBuffer = ""
-}
-
-return
-}
-
-// normal stitch
-current.push({
-text: stitch,
-done: false
-})
-
-})
-
-})
-
-// push final row
-if(current.length > 0){
-rows.push(current)
-}
-
-// save and rebuild
-saveProgress()
-render()
 
 }
 
@@ -414,16 +362,15 @@ document.body.style.zoom = level
 
 document.addEventListener("DOMContentLoaded",()=>{
 
-const savedPattern = localStorage.getItem("mosaic_patternText")
-
-if(savedPattern){
-
-parsePattern(savedPattern)
-
-}else{
-
 loadProgress()
 
+if(rows.length===0){
+
+const savedPattern=localStorage.getItem("mosaic_patternText")
+
+if(savedPattern){
+parsePattern(savedPattern)
 }
 
+}
 })
