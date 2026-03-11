@@ -373,3 +373,4 @@ parsePattern(savedPattern)
 }
 
 }
+})
