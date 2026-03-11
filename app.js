@@ -372,4 +372,4 @@ if(savedPattern){
 parsePattern(savedPattern)
 }
 
-})
+}
