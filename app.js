@@ -109,13 +109,13 @@ if(rowIndex === currentRow){
 
 const finished = rows[rowIndex].every(s => s.done)
 
-if(finished && currentRow<rows.length-1){
+if(finished){
 
-currentRow++
 rowsToday++
-
 localStorage.setItem("mosaic_rowsToday",rowsToday)
 
+if(currentRow < rows.length-1){
+currentRow++
 }
 
 }
@@ -302,8 +302,8 @@ const actualRow = rowStart + currentRow
 const totalRows = rows.length + rowStart - 1
 
 const rowPercent = rows.length > 0
-? Math.round((currentRow / rows.length) * 100)
-: 0
+  ? Math.round(((currentRow + 1) / rows.length) * 100)
+  : 0
 
 document.getElementById("dashRow").innerText =
 "Row: " + actualRow + " of " + totalRows + " (" + rowPercent + "%)"
