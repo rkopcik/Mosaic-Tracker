@@ -268,7 +268,10 @@ render()
 }
 function parsePattern(){
 
-const text = document.getElementById("patternInput").value
+const patternField = document.getElementById("patternInput")
+if(!patternField) return
+
+const text = patternField.value
 
 rows = []
 let current = []
