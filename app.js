@@ -28,7 +28,14 @@ render()
 
 function parsePattern(text){
 
+// reset pattern completely
 rows = []
+currentRow = 0
+
+// clear saved progress
+localStorage.removeItem("mosaic_rows")
+localStorage.removeItem("mosaic_currentRow")
+
 let current = []
 
 const lines = text.split("\n")
@@ -39,6 +46,7 @@ line = line.trim()
 
 if(line === "") return
 
+// detect new row label
 if(/^row\s*\d+/i.test(line) || /^\d+\s/.test(line)){
 
 if(current.length > 0){
@@ -46,11 +54,13 @@ rows.push(current)
 current = []
 }
 
+// remove row label
 line = line.replace(/^row\s*\d+[:.]?\s*/i,"")
 line = line.replace(/^\d+[:.]?\s*/,"")
 
 }
 
+// split stitches
 line.split(",").forEach(part => {
 
 const stitch = part.trim()
@@ -66,9 +76,16 @@ done: false
 
 })
 
+// push final row
 if(current.length > 0){
 rows.push(current)
 }
+
+// save fresh pattern
+saveProgress()
+
+// rebuild tracker
+render()
 
 }
 
