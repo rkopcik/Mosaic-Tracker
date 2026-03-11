@@ -191,22 +191,43 @@ tracker.innerHTML=""
 
 if(rows.length===0) return
 
-const projectName=localStorage.getItem("mosaic_projectName") || "Crochet Project"
-document.getElementById("dashProject").innerText=projectName
+const projectName=localStorage.getItem("mosaic_projectName") || "Project"
 
-const prev=buildRow(currentRow-1,true)
+document.getElementById("dashProject").innerText="Project: "+projectName
+const projectName=localStorage.getItem("mosaic_projectName") || "Project"
+
+document.getElementById("dashProject").innerText="Project: "+projectName
+const color1=localStorage.getItem("mosaic_color1") || "Color A"
+const color2=localStorage.getItem("mosaic_color2") || "Color B"
+
+const workingColor=(currentRow % 2 === 0) ? color1 : color2
+
+document.getElementById("dashColor").innerText=
+"Working Color: "+workingColor
+document.getElementById("dashGoalTime").innerText=
+"Goal Time: --"  
+document.getElementById("dashProjectTime").innerText=
+"Project Time: --"
+document.getElementById("dashGoal").innerText=
+"Daily Goal: 0 / 0 (0%)"  
+const prev = buildRow(currentRow-1,true)
 if(prev) tracker.appendChild(prev)
 
-const title=document.createElement("h3")
+const title = document.createElement("h3")
 
-const actualRow=currentRow+1
-const totalRows=rows.length
+const actualRow = currentRow + 1
+const totalRows = rows.length
 
-document.getElementById("dashRow").innerText=
-"Row: "+actualRow+" of "+totalRows
+const rowPercent = rows.length > 0
+  ? Math.round((currentRow / rows.length) * 100)
+  : 0
 
-title.innerText="Row "+actualRow
-title.id="currentRowTitle"
+document.getElementById("dashRow").innerText =
+"Row: " + actualRow + " of " + totalRows + " (" + rowPercent + "%)"
+
+title.innerText = "Row " + actualRow
+title.id = "currentRowTitle"
+
 tracker.appendChild(title)
 
 const current=buildRow(currentRow,false)
