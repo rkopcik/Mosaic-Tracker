@@ -266,8 +266,10 @@ if(prev) tracker.appendChild(prev)
 
 const title = document.createElement("h3")
 
-const actualRow = currentRow + 1
-const totalRows = rows.length
+const rowStart = parseInt(localStorage.getItem("mosaic_rowStart")) || 1
+
+const actualRow = rowStart + currentRow
+const totalRows = rows.length + rowStart - 1
 
 const rowPercent = rows.length > 0
 ? Math.round((currentRow / rows.length) * 100)
