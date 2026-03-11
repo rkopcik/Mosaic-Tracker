@@ -65,6 +65,9 @@ cursor:pointer;
 <option value="dark">Dark</option>
 </select>
 
+<label>Daily Goal</label>
+<input id="dailyGoal" type="text" placeholder="Row goal for the day">
+  
 <label>Starting Row Number</label>
 <input id="rowStart" type="number" value="1">
 
@@ -83,6 +86,7 @@ const projectName = document.getElementById("projectName").value
 const color1 = document.getElementById("color1").value
 const color2 = document.getElementById("color2").value
 const startColor = document.getElementById("startColor").value
+const dailyGoal = document.getElementById("dailyGoal").value
 const rowStart = document.getElementById("rowStart").value
 const pattern = document.getElementById("patternInput").value
 
@@ -90,6 +94,7 @@ localStorage.setItem("mosaic_projectName", projectName)
 localStorage.setItem("mosaic_color1", color1)
 localStorage.setItem("mosaic_color2", color2)
 localStorage.setItem("mosaic_startColor", startColor)
+localStorage.setItem("mosaic_dailyGoal", dailyGoal)
 localStorage.setItem("mosaic_rowStart", rowStart)
 localStorage.setItem("mosaic_patternText", pattern)
 
