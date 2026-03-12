@@ -451,7 +451,6 @@ const today = new Date().toISOString().split("T")[0]
 if(goalDate !== today){
 rowsToday = 0
 goalTime = 0
-
 localStorage.setItem("mosaic_rowsToday",0)
 localStorage.setItem("mosaic_goalTime",0)
 localStorage.setItem("mosaic_goalDate",today)
@@ -461,15 +460,18 @@ loadProgress()
 
 updateTimers()
 
+const newPattern = localStorage.getItem("mosaic_newPattern")
 const savedPattern = localStorage.getItem("mosaic_patternText")
 
-if(savedPattern){
+if(newPattern === "true" && savedPattern){
 
 rows = []
 currentRow = 0
 
 parsePattern(savedPattern)
 saveProgress()
+
+localStorage.removeItem("mosaic_newPattern")
 
 }
 
