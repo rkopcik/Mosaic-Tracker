@@ -2,6 +2,12 @@ let rows = []
 let currentRow = 0
 let rowsToday = parseInt(localStorage.getItem("mosaic_rowsToday")) || 0
 let goalDate = localStorage.getItem("mosaic_goalDate") || ""
+let projectTime = parseInt(localStorage.getItem("mosaic_projectTime")) || 0
+let goalTime = parseInt(localStorage.getItem("mosaic_goalTime")) || 0
+
+let timerRunning = false
+let timerInterval = null
+
 
 function saveProgress(){
 
@@ -101,6 +107,8 @@ render()
 
 function toggle(rowIndex,stepIndex){
 
+startTimer()
+  
 if(rowIndex > currentRow) return
 
 if(rowIndex === currentRow){
@@ -393,6 +401,45 @@ block:"center"
 
 }
 
+function startTimer(){
+
+if(timerRunning) return
+
+timerRunning = true
+
+timerInterval = setInterval(()=>{
+
+projectTime++
+goalTime++
+
+localStorage.setItem("mosaic_projectTime", projectTime)
+localStorage.setItem("mosaic_goalTime", goalTime)
+
+updateTimers()
+
+},1000)
+
+}
+
+function formatTime(seconds){
+
+const h = Math.floor(seconds/3600)
+const m = Math.floor((seconds%3600)/60)
+const s = seconds%60
+
+return h+":"+String(m).padStart(2,"0")+":"+String(s).padStart(2,"0")
+
+}
+
+function updateTimers(){
+
+document.getElementById("dashGoalTime").innerText =
+"Goal Time: " + formatTime(goalTime)
+
+document.getElementById("dashProjectTime").innerText =
+"Project Time: " + formatTime(projectTime)
+
+}
 
 function setZoom(level){
 
@@ -413,6 +460,7 @@ localStorage.setItem("mosaic_goalDate",today)
 
 loadProgress()
 
+updateTimers()
 const savedPattern = localStorage.getItem("mosaic_patternText")
 
 if(savedPattern){
