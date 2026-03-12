@@ -288,7 +288,7 @@ if(dailyGoal > 0){
 let rowPercent = 0
 
 if(rows.length > 0){
-rowPercent = Math.round(((currentRow + 1) / rows.length) * 100)
+rowPercent = Math.round((currentRow / rows.length) * 100)
 }
 goalPercent = Math.min(Math.round((rowsToday / dailyGoal) * 100),100)
 }
