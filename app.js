@@ -7,6 +7,7 @@ function saveProgress(){
 
 localStorage.setItem("mosaic_rows", JSON.stringify(rows))
 localStorage.setItem("mosaic_currentRow", currentRow)
+localStorage.setItem("mosaic_rowsToday", rowsToday)
 
 }
 
@@ -19,7 +20,9 @@ const savedRow = localStorage.getItem("mosaic_currentRow")
 if(savedRows){
 
 rows = JSON.parse(savedRows)
-currentRow = parseInt(savedRow) || 0
+currentRow = parseInt(savedRow)||0
+
+rowsToday = parseInt(localStorage.getItem("mosaic_rowsToday")) || 0
 render()
 
 }
@@ -134,6 +137,9 @@ render()
 function resetRow(rowIndex){
 
 rows[rowIndex].forEach(s => s.done = false)
+
+rows[rowIndex].counted = false
+
 currentRow = rowIndex
 
 saveProgress()
@@ -148,6 +154,9 @@ if(currentRow > 0){
 
 rows[currentRow].forEach(s => s.done = false)
 rows[currentRow-1].forEach(s => s.done = false)
+
+rows[currentRow].counted = false
+rows[currentRow-1].counted = false
 
 currentRow--
 
