@@ -85,7 +85,11 @@ done: false
 if(current.length > 0){
 rows.push(current)
 }
-
+currentRow = 0
+rowsToday = 0
+localStorage.setItem("mosaic_currentRow",0)
+localStorage.setItem("mosaic_rowsToday",0)
+  
 // save fresh pattern
 saveProgress()
 
