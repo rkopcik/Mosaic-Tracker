@@ -36,6 +36,9 @@ function parsePattern(text){
 rows = []
 currentRow = 0
 
+rowsToday = 0
+localStorage.setItem("mosaic_rowsToday",0)
+
 // clear saved progress
 localStorage.setItem("mosaic_patternText", text)
 localStorage.removeItem("mosaic_rows")
@@ -138,7 +141,10 @@ function resetRow(rowIndex){
 
 rows[rowIndex].forEach(s => s.done = false)
 
+if(rows[rowIndex].counted){
+rowsToday--
 rows[rowIndex].counted = false
+}
 
 currentRow = rowIndex
 
@@ -155,8 +161,15 @@ if(currentRow > 0){
 rows[currentRow].forEach(s => s.done = false)
 rows[currentRow-1].forEach(s => s.done = false)
 
+if(rows[currentRow].counted){
+rowsToday--
 rows[currentRow].counted = false
+}
+
+if(rows[currentRow-1].counted){
+rowsToday--
 rows[currentRow-1].counted = false
+}
 
 currentRow--
 
