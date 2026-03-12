@@ -187,6 +187,19 @@ if(rowIndex < 0 || rowIndex >= rows.length) return null
 const container = document.createElement("div")
 container.className = small ? "row-small" : "row"
 
+const start = localStorage.getItem("mosaic_startColor") || "light"
+
+const isLightRow = (rowIndex % 2 === 0)
+
+const tint =
+(start === "light")
+  ? (isLightRow ? "#ffffff" : "#dcecff")
+  : (isLightRow ? "#dcecff" : "#ffffff")
+
+container.style.backgroundColor = tint
+container.style.padding = "10px"
+container.style.borderRadius = "6px"
+  
 const steps = document.createElement("div")
 steps.className = "steps"
 
@@ -358,7 +371,6 @@ document.getElementById("dashRow").innerText =
 
 title.innerText = "Row " + actualRow
 title.id = "currentRowTitle"
-title.style.marginBottom = "16px"
 title.style.marginTop = "16px"
 
 tracker.appendChild(title)
@@ -403,7 +415,8 @@ const nextRowNumber = rowStart + currentRow + 1
 nextTitle.innerText = "Row " + nextRowNumber
 nextTitle.style.fontWeight = "bold"
 nextTitle.style.opacity = ".5"
-
+title.style.marginTop = "16px"
+  
 tracker.appendChild(nextTitle)
 
 const next = buildRow(currentRow+1,true)
