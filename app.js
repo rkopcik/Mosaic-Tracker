@@ -358,6 +358,8 @@ document.getElementById("dashRow").innerText =
 
 title.innerText = "Row " + actualRow
 title.id = "currentRowTitle"
+title.style.marginBottom = "16px"
+title.styoe.marginTop = "16px"
 
 tracker.appendChild(title)
 
