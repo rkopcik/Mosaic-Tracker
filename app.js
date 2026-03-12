@@ -457,9 +457,11 @@ localStorage.setItem("mosaic_goalDate",today)
 loadProgress()
 
 updateTimers()
+
 const savedPattern = localStorage.getItem("mosaic_patternText")
 
-if(savedPattern){
+if(rows.length === 0 && savedPattern){
 parsePattern(savedPattern)
 }
+
 })
