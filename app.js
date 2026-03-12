@@ -112,13 +112,14 @@ const finished = rows[rowIndex].every(s => s.done)
 if(finished){
 
 rowsToday++
-localStorage.setItem("mosaic_rowsToday",rowsToday)
+localStorage.setItem("mosaic_rowsToday", rowsToday)
 
-if(currentRow < rows.length-1){
+if(currentRow < rows.length - 1){
 currentRow++
 }
 
 }
+
 }
 saveProgress()
 render()
