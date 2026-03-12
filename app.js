@@ -449,14 +449,12 @@ document.addEventListener("DOMContentLoaded",()=>{
 const today = new Date().toISOString().split("T")[0]
 
 if(goalDate !== today){
-
 rowsToday = 0
 goalTime = 0
 
 localStorage.setItem("mosaic_rowsToday",0)
 localStorage.setItem("mosaic_goalTime",0)
 localStorage.setItem("mosaic_goalDate",today)
-
 }
 
 loadProgress()
@@ -465,8 +463,16 @@ updateTimers()
 
 const savedPattern = localStorage.getItem("mosaic_patternText")
 
-if(rows.length === 0 && savedPattern){
+if(savedPattern){
+
+rows = []
+currentRow = 0
+
 parsePattern(savedPattern)
+saveProgress()
+
 }
+
+render()
 
 })
