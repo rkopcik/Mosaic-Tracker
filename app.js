@@ -295,11 +295,7 @@ goalPercent = Math.min(Math.round((rowsToday / dailyGoal) * 100),100)
 document.getElementById("dashGoal").innerText =
 "Daily Goal: " + rowsToday + " / " + dailyGoal + " (" + goalPercent + "%)"
 
-document.getElementById("dashGoalTime").innerText =
-"Goal Time: --"
-
-document.getElementById("dashProjectTime").innerText =
-"Project Time: --"
+updateTimers()
 
 
 /* STOP IF NO ROWS YET */
