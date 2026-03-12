@@ -109,7 +109,10 @@ if(rowIndex === currentRow){
 
 const finished = rows[rowIndex].every(s => s.done)
 
-if(finished){
+// Only trigger when the row JUST became finished
+if(finished && rows[rowIndex].counted !== true){
+
+rows[rowIndex].counted = true
 
 rowsToday++
 localStorage.setItem("mosaic_rowsToday", rowsToday)
@@ -121,6 +124,7 @@ currentRow++
 }
 
 }
+
 saveProgress()
 render()
 
