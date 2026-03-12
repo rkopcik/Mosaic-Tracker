@@ -328,19 +328,23 @@ if(prev) tracker.appendChild(prev)
 
 const title = document.createElement("h3")
 
+const title = document.createElement("h3")
+
 const rowStart = parseInt(localStorage.getItem("mosaic_rowStart")) || 1
 
 const actualRow = rowStart + currentRow
 const totalRows = rows.length + rowStart - 1
 
+const rowsCompleted = actualRow - 1
+
 let rowPercent = 0
 
-if(rows.length > 0){
-rowPercent = Math.round(((currentRow + 1) / rows.length) * 100)
+if(totalRows > 0){
+rowPercent = Math.round((rowsCompleted / totalRows) * 100)
 }
 
 document.getElementById("dashRow").innerText =
-"Row: " + actualRow + " of " + totalRows + " (" + rowPercent + "%)"
+"Row: " + rowsCompleted + " of " + totalRows + " (" + rowPercent + "%)"
 
 title.innerText = "Row " + actualRow
 title.id = "currentRowTitle"
