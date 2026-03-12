@@ -315,8 +315,23 @@ return
 
 /* PREVIOUS ROW */
 
+if(currentRow > 0){
+
+const prevTitle = document.createElement("div")
+
+const rowStart = parseInt(localStorage.getItem("mosaic_rowStart")) || 1
+const prevRowNumber = rowStart + currentRow - 1
+
+prevTitle.innerText = "Row " + prevRowNumber
+prevTitle.style.fontWeight = "bold"
+prevTitle.style.opacity = ".5"
+
+tracker.appendChild(prevTitle)
+
 const prev = buildRow(currentRow-1,true)
-if(prev) tracker.appendChild(prev)
+tracker.appendChild(prev)
+
+}
 
 
 /* CURRENT ROW TITLE */
@@ -376,8 +391,23 @@ tracker.appendChild(current)
 
 /* NEXT ROW PREVIEW */
 
+if(currentRow < rows.length - 1){
+
+const nextTitle = document.createElement("div")
+
+const rowStart = parseInt(localStorage.getItem("mosaic_rowStart")) || 1
+const nextRowNumber = rowStart + currentRow + 1
+
+nextTitle.innerText = "Row " + nextRowNumber
+nextTitle.style.fontWeight = "bold"
+nextTitle.style.opacity = ".5"
+
+tracker.appendChild(nextTitle)
+
 const next = buildRow(currentRow+1,true)
-if(next) tracker.appendChild(next)
+tracker.appendChild(next)
+
+}
 
 
 /* CENTER ACTIVE STITCH */
