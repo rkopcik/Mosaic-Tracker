@@ -320,7 +320,7 @@ const rowStart = parseInt(localStorage.getItem("mosaic_rowStart")) || 1
 const actualRow = rowStart + currentRow
 const totalRows = rows.length + rowStart - 1
 
-const rowsCompleted = (rowStart - 1) + currentRow
+const rowsCompleted = currentRow + (rowStart - 1)
 
 let rowPercent = 0
 
