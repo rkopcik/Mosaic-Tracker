@@ -36,9 +36,6 @@ function parsePattern(text){
 rows = []
 currentRow = 0
 
-rowsToday = 0
-localStorage.setItem("mosaic_rowsToday",0)
-
 // clear saved progress
 localStorage.setItem("mosaic_patternText", text)
 localStorage.removeItem("mosaic_rows")
@@ -141,10 +138,7 @@ function resetRow(rowIndex){
 
 rows[rowIndex].forEach(s => s.done = false)
 
-if(rows[rowIndex].counted){
-rowsToday--
 rows[rowIndex].counted = false
-}
 
 currentRow = rowIndex
 
@@ -161,15 +155,8 @@ if(currentRow > 0){
 rows[currentRow].forEach(s => s.done = false)
 rows[currentRow-1].forEach(s => s.done = false)
 
-if(rows[currentRow].counted){
-rowsToday--
 rows[currentRow].counted = false
-}
-
-if(rows[currentRow-1].counted){
-rowsToday--
 rows[currentRow-1].counted = false
-}
 
 currentRow--
 
@@ -288,7 +275,7 @@ if(dailyGoal > 0){
 let rowPercent = 0
 
 if(rows.length > 0){
-rowPercent = Math.round((currentRow / rows.length) * 100)
+rowPercent = Math.round(((currentRow + 1) / rows.length) * 100)
 }
 goalPercent = Math.min(Math.round((rowsToday / dailyGoal) * 100),100)
 }
@@ -326,7 +313,29 @@ if(prev) tracker.appendChild(prev)
 
 /* CURRENT ROW TITLE */
 
-"Row: " + rowsCompleted + " of " + totalRows
+const title = document.createElement("h3")
+
+const rowStart = parseInt(localStorage.getItem("mosaic_rowStart")) || 1
+
+const actualRow = rowStart + currentRow
+const totalRows = rows.length + rowStart - 1
+
+let rowsCompleted = actualRow - 1
+if(rowsCompleted < 0) rowsCompleted = 0
+
+let rowPercent = 0
+
+if(totalRows > 0){
+rowPercent = Math.round((rowsCompleted / totalRows) * 100)
+}
+
+document.getElementById("dashRow").innerText =
+"Row: " + rowsCompleted + " of " + totalRows + " (" + rowPercent + "%)"
+
+title.innerText = "Row " + actualRow
+title.id = "currentRowTitle"
+
+tracker.appendChild(title)
 
 
 /* CURRENT ROW */
