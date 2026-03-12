@@ -320,13 +320,12 @@ const rowStart = parseInt(localStorage.getItem("mosaic_rowStart")) || 1
 const actualRow = rowStart + currentRow
 const totalRows = rows.length + rowStart - 1
 
-let rowsCompleted = actualRow - 1
-if(rowsCompleted < 0) rowsCompleted = 0
+const rowsCompleted = currentRow
 
 let rowPercent = 0
 
-if(totalRows > 0){
-rowPercent = Math.round((rowsCompleted / totalRows) * 100)
+if(rows.length > 0){
+rowPercent = Math.round((rowsCompleted / rows.length) * 100)
 }
 
 document.getElementById("dashRow").innerText =
