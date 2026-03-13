@@ -207,7 +207,9 @@ container.style.borderRadius = "6px"
 const steps = document.createElement("div")
 steps.className = "steps"
 
-rows[rowIndex].stitches.forEach((seg,i)=>{
+const row = rows[rowIndex].stitches || rows[rowIndex]
+
+row.forEach((seg,i)=>{
 
 const step = document.createElement("div")
 step.className = "step"
@@ -387,7 +389,9 @@ const current = buildRow(currentRow,false)
 const totalStitches = countStitches(rows[currentRow].stitches)
 let completedStitches = 0
 
-rows[currentRow].stitches.forEach(step => {
+const row = rows[currentRow].stitches || rows[currentRow]
+
+row.forEach(step=>{
 
 if(step.done){
 completedStitches += countStitches([step])
