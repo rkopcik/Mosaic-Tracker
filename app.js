@@ -112,23 +112,24 @@ render()
 function toggle(rowIndex,stepIndex){
 
 startTimer()
-  
+
 if(rowIndex > currentRow) return
+
+const row = rows[rowIndex].stitches || rows[rowIndex]
 
 if(rowIndex === currentRow){
 
-const next = rows[rowIndex].findIndex(s => !s.done)
+const next = row.findIndex(s => !s.done)
 if(stepIndex > next) return
 
 }
 
-rows[rowIndex][stepIndex].done = !rows[rowIndex][stepIndex].done
+row[stepIndex].done = !row[stepIndex].done
 
 if(rowIndex === currentRow){
 
-const finished = rows[rowIndex].every(s => s.done)
+const finished = row.every(s => s.done)
 
-// Only trigger when the row JUST became finished
 if(finished && rows[rowIndex].counted !== true){
 
 rows[rowIndex].counted = true
@@ -149,10 +150,11 @@ render()
 
 }
 
-
 function resetRow(rowIndex){
 
-rows[rowIndex].forEach(s => s.done = false)
+const row = rows[rowIndex].stitches || rows[rowIndex]
+
+row.forEach(s => s.done = false)
 
 rows[rowIndex].counted = false
 
@@ -168,8 +170,11 @@ function resetPreviousRow(){
 
 if(currentRow > 0){
 
-rows[currentRow].forEach(s => s.done = false)
-rows[currentRow-1].forEach(s => s.done = false)
+const row = rows[currentRow].stitches || rows[currentRow]
+const prevRow = rows[currentRow-1].stitches || rows[currentRow-1]
+
+row.forEach(s => s.done = false)
+prevRow.forEach(s => s.done = false)
 
 rows[currentRow].counted = false
 rows[currentRow-1].counted = false
@@ -386,7 +391,8 @@ tracker.appendChild(title)
 
 const current = buildRow(currentRow,false)
 
-const totalStitches = countStitches(rows[currentRow].stitches)
+const row = rows[currentRow].stitches || rows[currentRow]
+const totalStitches = countStitches(row)
 let completedStitches = 0
 
 const row = rows[currentRow].stitches || rows[currentRow]
@@ -423,7 +429,7 @@ const nextRowNumber = rowStart + currentRow + 1
 nextTitle.innerText = "Row " + nextRowNumber
 nextTitle.style.fontWeight = "bold"
 nextTitle.style.opacity = ".5"
-title.style.marginTop = "16px"
+nextTitle.style.marginTop = "16px"
   
 tracker.appendChild(nextTitle)
 
