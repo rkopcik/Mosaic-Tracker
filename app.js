@@ -71,7 +71,9 @@ line = line.replace(/^\d+[:.]?\s*/,"")
 
 }
 
-// split stitches
+// detect simple repeat marker
+const hasRepeat = line.includes("*") || line.toLowerCase().includes("repeat")
+
 line.split(",").forEach(part => {
 
 const stitch = part.trim()
@@ -89,6 +91,19 @@ done: false
 
 // push final row
 if(current.length > 0){
+
+if(hasRepeat){
+
+rows.push({
+type: "repeat",
+stitches: current,
+prefix: [],
+repeat: [],
+suffix: []
+})
+
+}else{
+
 rows.push({
 type: "normal",
 stitches: current,
@@ -96,6 +111,9 @@ prefix: [],
 repeat: [],
 suffix: []
 })
+
+}
+
 }
 
   
