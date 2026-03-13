@@ -90,8 +90,12 @@ done: false
 // push final row
 if(current.length > 0){
 rows.push({
-  type: "normal",
-  stitches: current})
+type: "normal",
+stitches: current,
+prefix: [],
+repeat: [],
+suffix: []
+})
 }
 
   
