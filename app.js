@@ -48,6 +48,7 @@ localStorage.removeItem("mosaic_rows")
 localStorage.removeItem("mosaic_currentRow")
 
 let current = []
+let hasRepeat = false
 
 const lines = text.split("\n")
 
@@ -57,12 +58,26 @@ line = line.trim()
 
 if(line === "") return
 
+// detect repeat marker
+if(line.includes("*") || line.toLowerCase().includes("repeat")){
+hasRepeat = true
+}
+
 // detect new row label
 if(/^row\s*\d+/i.test(line) || /^\d+\s/.test(line)){
 
 if(current.length > 0){
-rows.push(current)
+
+rows.push({
+type: hasRepeat ? "repeat" : "normal",
+stitches: current,
+prefix: [],
+repeat: [],
+suffix: []
+})
+
 current = []
+hasRepeat = false
 }
 
 // remove row label
@@ -71,9 +86,7 @@ line = line.replace(/^\d+[:.]?\s*/,"")
 
 }
 
-// detect simple repeat marker
-const hasRepeat = line.includes("*") || line.toLowerCase().includes("repeat")
-
+// split stitches
 line.split(",").forEach(part => {
 
 const stitch = part.trim()
@@ -92,20 +105,8 @@ done: false
 // push final row
 if(current.length > 0){
 
-if(hasRepeat){
-
 rows.push({
-type: "repeat",
-stitches: current,
-prefix: [],
-repeat: [],
-suffix: []
-})
-
-}else{
-
-rows.push({
-type: "normal",
+type: hasRepeat ? "repeat" : "normal",
 stitches: current,
 prefix: [],
 repeat: [],
@@ -114,14 +115,11 @@ suffix: []
 
 }
 
-}
-
-  
 currentRow = 0
 rowsToday = 0
 localStorage.setItem("mosaic_currentRow",0)
 localStorage.setItem("mosaic_rowsToday",0)
-  
+
 // save fresh pattern
 saveProgress()
 
