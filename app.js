@@ -392,12 +392,11 @@ tracker.appendChild(title)
 const current = buildRow(currentRow,false)
 
 const row = rows[currentRow].stitches || rows[currentRow]
+
 const totalStitches = countStitches(row)
 let completedStitches = 0
 
-const row = rows[currentRow].stitches || rows[currentRow]
-
-row.forEach(step=>{
+row.forEach(step => {
 
 if(step.done){
 completedStitches += countStitches([step])
