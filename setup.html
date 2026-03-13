@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+<meta charset="UTF-8">
+<title>Mosaic Crochet Tracker – Setup</title>
+
+<style>
+
+body{
+font-family:Arial, sans-serif;
+margin:20px;
+max-width:800px;
+}
+
+h1{
+font-size:32px;
+}
+
+label{
+font-weight:bold;
+display:block;
+margin-top:15px;
+}
+
+textarea{
+width:100%;
+height:180px;
+font-size:16px;
+}
+
+input, select{
+font-size:16px;
+padding:6px;
+margin-top:5px;
+}
+
+button{
+font-size:18px;
+padding:12px 20px;
+margin-top:20px;
+cursor:pointer;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<h1>Mosaic Crochet Tracker</h1>
+
+<label>Project Name</label>
+<input id="projectName" type="text" placeholder="Project name">
+
+<label>Color 1 (Light)</label>
+<input id="color1" type="text" placeholder="Example: Ivory">
+
+<label>Color 2 (Dark)</label>
+<input id="color2" type="text" placeholder="Example: Brick Red">
+
+<label>Starting Color</label>
+<select id="startColor">
+<option value="light">Light</option>
+<option value="dark">Dark</option>
+</select>
+
+<label>Daily Goal</label>
+<input id="dailyGoal" type="text" placeholder="Row goal for the day">
+  
+<label>Starting Row Number</label>
+<input id="rowStart" type="number" value="1">
+
+<label>Paste Pattern</label>
+<textarea id="patternInput" placeholder="Paste your pattern rows here"></textarea>
+
+<br>
+
+<button onclick="startProject()">Let's Get Started!</button>
+
+<script>
+
+function startProject(){
+
+const projectName = document.getElementById("projectName").value
+const color1 = document.getElementById("color1").value
+const color2 = document.getElementById("color2").value
+const startColor = document.getElementById("startColor").value
+const dailyGoal = document.getElementById("dailyGoal").value
+const rowStart = document.getElementById("rowStart").value
+const pattern = document.getElementById("patternInput").value
+
+localStorage.setItem("mosaic_projectName", projectName)
+localStorage.setItem("mosaic_color1", color1)
+localStorage.setItem("mosaic_color2", color2)
+localStorage.setItem("mosaic_startColor", startColor)
+localStorage.setItem("mosaic_dailyGoal", dailyGoal)
+localStorage.setItem("mosaic_rowStart", rowStart)
+localStorage.setItem("mosaic_patternText", pattern)
+localStorage.setItem("mosaic_newPattern","true")
+  
+window.location.href = "index.html"
+
+}
+
+</script>
+
+</body>
+
+</html>

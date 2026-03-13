@@ -1,0 +1,48 @@
+<head>
+<meta charset="UTF-8">
+<title>Mosaic Crochet Tracker</title>
+
+<link rel="stylesheet" href="style.css">
+
+</head>
+
+<body>
+
+<div id="dashboard">
+
+<div id="dashLeft">
+<div id="dashProject">Crochet Project</div>
+<div id="dashColor"></div>
+<div id="dashGoal"></div>
+<div id="dashRow"></div>
+
+<div id="dashResetButtons">
+<button onclick="resetRow(currentRow)">Reset Current Row</button>
+<button onclick="resetPreviousRow()">Reset Previous Row</button>
+</div>
+
+</div>
+
+
+<div id="dashRight">
+
+<div id="dashMenu">☰</div>
+<div id="dashStitches"></div>
+<div id="dashGoalTime"></div>
+<div id="dashProjectTime"></div>
+
+<div id="dashZoomButtons">
+<button onclick="setZoom(1)">1x</button>
+<button onclick="setZoom(1.5)">1.5x</button>
+<button onclick="setZoom(2)">2x</button>
+</div>
+
+</div>
+
+</div>
+
+<div id="tracker"></div>
+
+<script src="app.js"></script>
+
+</body>
