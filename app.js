@@ -246,12 +246,25 @@ row = rowData.stitches || rowData
 
 row.forEach((seg,i)=>{
 
+// add repeat divider every 4 stitches (temporary test)
+if(rows[rowIndex].type === "repeat" && i > 0 && i % 4 === 0){
+
+const divider = document.createElement("div")
+divider.innerText = "||"
+divider.style.opacity = ".4"
+divider.style.fontWeight = "bold"
+divider.style.padding = "0 6px"
+
+steps.appendChild(divider)
+
+}
+
 const step = document.createElement("div")
 step.className = "step"
 
 if(seg.done) step.classList.add("done")
 
-if(!small && !seg.done && i === rows[rowIndex].findIndex(s => !s.done)){
+if(!small && !seg.done && i === row.findIndex(s => !s.done)){
 step.classList.add("current")
 }
 
