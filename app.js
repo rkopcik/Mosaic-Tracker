@@ -89,8 +89,12 @@ done: false
 
 // push final row
 if(current.length > 0){
-rows.push(current)
+rows.push({
+  type: "normal",
+  stitches: current})
 }
+
+  
 currentRow = 0
 rowsToday = 0
 localStorage.setItem("mosaic_currentRow",0)
@@ -203,7 +207,7 @@ container.style.borderRadius = "6px"
 const steps = document.createElement("div")
 steps.className = "steps"
 
-rows[rowIndex].forEach((seg,i)=>{
+rows[rowIndex].stitches.forEach((seg,i)=>{
 
 const step = document.createElement("div")
 step.className = "step"
@@ -380,10 +384,10 @@ tracker.appendChild(title)
 
 const current = buildRow(currentRow,false)
 
-const totalStitches = countStitches(rows[currentRow])
+const totalStitches = countStitches(rows[currentRow].stitches)
 let completedStitches = 0
 
-rows[currentRow].forEach(step => {
+rows[currentRow].stitches.forEach(step => {
 
 if(step.done){
 completedStitches += countStitches([step])
