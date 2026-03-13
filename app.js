@@ -212,7 +212,15 @@ container.style.borderRadius = "6px"
 const steps = document.createElement("div")
 steps.className = "steps"
 
-const row = rows[rowIndex].stitches || rows[rowIndex]
+const rowData = rows[rowIndex]
+
+let row
+
+if(rowData.type === "normal"){
+row = rowData.stitches
+}else{
+row = rowData.stitches || rowData
+}
 
 row.forEach((seg,i)=>{
 
